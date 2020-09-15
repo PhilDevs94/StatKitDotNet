@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetCoreStartKit.Core\DotNetCoreStartKit.Core.csproj" />
+    <ProjectReference Include="..\DotNetCoreStartKit.Data\DotNetCoreStartKit.Data.csproj" />
+    <ProjectReference Include="..\DotNetCoreStartKit.Domain\DotNetCoreStartKit.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
