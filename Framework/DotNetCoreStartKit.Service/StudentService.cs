@@ -1,12 +1,10 @@
-﻿using DotNetCoreStartKit.Core.DataContext;
-using DotNetCoreStartKit.Core.Model;
+﻿using DotNetCoreStartKit.Core.Model;
 using DotNetCoreStartKit.Core.Repository;
 using DotNetCoreStartKit.Data;
 using DotNetCoreStartKit.Domain.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;

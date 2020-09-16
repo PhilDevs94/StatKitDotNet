@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { StudentPageRoutingModule } from './student-page-routing.module';
 import { StudentPageComponent } from './student-page.component';
@@ -10,7 +11,8 @@ import {SharedModule} from '../../../theme/shared/shared.module';
   imports: [
     CommonModule,
     StudentPageRoutingModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule,
   ]
 })
 export class StudentPageModule { }

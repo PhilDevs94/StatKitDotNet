@@ -76,14 +76,26 @@ namespace DotNetStartKit
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors();
+            app.UseCors( options =>
+            options.WithOrigins("http://localhost:4200/")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin()
+            
+            );
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMvc(routerbuilder =>
             {
-                routerbuilder.Select().Filter().Expand().Count().MaxTop(20000).OrderBy();
+                routerbuilder
+                .Select()
+                .Filter()
+                .Expand()
+                .Count()
+                .MaxTop(null)
+                .OrderBy();
                 routerbuilder.EnableDependencyInjection();
-                routerbuilder.MapODataServiceRoute("api", "api", GetEdmModel());
+                routerbuilder.MapODataServiceRoute("odata", "odata", GetEdmModel());
             });
             app.UseEndpoints(endpoints =>
             {

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using DotNetCoreStartKit.Core.UnitOfWork;
 using DotNetCoreStartKit.Domain.ViewModels;
@@ -51,6 +54,38 @@ namespace DotNetStartKit.Areas.api.Controllers
             {
                 throw ex;
             }
+        }
+        
+        [HttpPut]
+        public async Task<IActionResult> Put(StudentViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _studentService.UpdateAsync(model);
+                _unitOfWorkAsync.Commit();
+                await TryUpdateModelAsync(model);
+                return Content("Updated Student", "application/json", Encoding.UTF8); 
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpDelete]
+
+        public IActionResult Delete([FromODataUri]Guid key)
+        {
+            _studentService.Delete(key);
+            _unitOfWorkAsync.Commit();
+            return StatusCode(200, new { Deleted = "Success" });
+
         }
     }
 }
