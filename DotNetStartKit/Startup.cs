@@ -31,12 +31,11 @@ namespace DotNetStartKit
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IDataContext, DataContext>(options =>
+            services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<DataContext>();
-            services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMvc().AddControllersAsServices(); 
             services.AddControllers(mvcOptions =>
@@ -51,7 +50,7 @@ namespace DotNetStartKit
                         .AllowAnyHeader());
             });
             //There is no need to implement this anymore
-            //services.AddScoped<IDataContext, DataContext>();
+            services.AddScoped<IDataContext, DataContext>();
             services.AddTransient<DbContext, DataContext>();
             services.AddTransient<IUnitOfWorkAsync, UnitOfWork>();
             services.AddTransient<IStudentService, StudentService>();

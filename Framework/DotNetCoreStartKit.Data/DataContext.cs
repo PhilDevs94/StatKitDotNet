@@ -1,5 +1,6 @@
 ﻿using DotNetCoreStartKit.Core.DataContext;
 using DotNetCoreStartKit.Core.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DotNetCoreStartKit.Data
 {
-    public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
+    public class DataContext : IdentityDbContext<IdentityUser>, IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -16,7 +17,7 @@ namespace DotNetCoreStartKit.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
-        public override DbSet<ApplicationUser> Users { get; set; }
+        public override DbSet<IdentityUser> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
