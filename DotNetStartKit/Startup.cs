@@ -16,6 +16,9 @@ using static DotNetCoreStartKit.Service.StudentService;
 using DotNetCoreStartKit.Core.Repository;
 using DotNetCoreStartKit.Core.DataContext;
 using DotNetCoreStartKit.Core.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace DotNetStartKit
 {
@@ -34,9 +37,25 @@ namespace DotNetStartKit
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<DataContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<DataContext>()
+                .AddRoles<IdentityRole>()
+                .AddDefaultTokenProviders();
             services.AddRazorPages();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
             services.AddMvc().AddControllersAsServices(); 
             services.AddControllers(mvcOptions =>
             mvcOptions.EnableEndpointRouting = false).AddControllersAsServices(); 
